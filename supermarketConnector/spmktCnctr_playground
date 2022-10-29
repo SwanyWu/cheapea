@@ -1,0 +1,14 @@
+# jumbo api is outdated in this lib (see issues and pull request), apparent repo is not maintained anymore
+# https://github.com/bartmachielsen/SupermarktConnector
+
+import json
+from supermarktconnector.jumbo import JumboConnector
+connector = JumboConnector()
+res = connector.search_products(query='kiwi', size=1, page=0)
+print(res)
+
+from supermarktconnector.ah import AHConnector
+connector = AHConnector()
+res = connector.get_categories()
+with open("supermarketConnector/albert_heijn.json", "w") as outfile:
+    json.dump(res, outfile)

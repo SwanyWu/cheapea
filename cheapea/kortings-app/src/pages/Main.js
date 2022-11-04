@@ -1,3 +1,4 @@
+// these are 3 React elements we need
 import React, {useState, useEffect, Suspense} from "react";
 import Offers from '../offers.json';
 import ShareDialog from "../components/ShareDialog";
@@ -20,6 +21,22 @@ function Main(props) {
     ['ah', 0], ['jumbo', 0], ['lidl', 0], ['aldi', 0], ['plus', 0], ['spar', 0], ['ekoplaza', 0], ['dirk', 0]
   ]
 
+// Declare state variables of the format [var, fun-->var]
+/*
+function Example() {
+  // Declare a new state variable, which we'll call "count"
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
+}
+*/
   const [categoriesList, setCategoriesList] = useState(categories)
   const [shopsList, setShopsList] = useState(shops)
   const [selectedOffers, setSelectedOffers] = useState(Offers);  
@@ -99,6 +116,7 @@ function Main(props) {
     setCategoriesList(tempList)
   }
 
+  // only shop and cate will affect URL, not deal
   const updateUrl = (shopName, catName) => {
     var shopUrlPart = ""
     var catUrlPart = ""
@@ -135,7 +153,7 @@ function Main(props) {
     } 
     document.title = catPart + "" + shopPart + titlePart 
   }
-
+// filter on shop
   const clickOnShop = (name) => {
     toggleFilterButton(name, "shop")
     if(selectedShopRoute === name) {
@@ -144,9 +162,9 @@ function Main(props) {
     setSelectedShopRoute(name)
     setCounterPerCategory(name)
     updateOfferList(name, selectedCatRoute, selectedDealRoute)
-    updateUrl(name, selectedCatRoute)
+    updateUrl(name, selectedCatRoute) // clicks will show in url
   }
-
+// filter on category
   const clickOnCat = (name) => {
     toggleFilterButton(name, "category")
     if(selectedCatRoute === name) {
@@ -154,25 +172,25 @@ function Main(props) {
     }
     setSelectedCatRoute(name)
     updateOfferList(selectedShopRoute, name, selectedDealRoute)
-    updateUrl(selectedShopRoute, name)
+    updateUrl(selectedShopRoute, name) // clicks will show in url
   }
-
+// filter on deal
   const clickOnDeal = (name) => {
     toggleFilterButton(name, "deal")
     if(selectedDealRoute === name) {
       name = undefined
     }
     setSelectedDealRoute(name)
-    updateOfferList(selectedShopRoute, selectedCatRoute, name)
+    updateOfferList(selectedShopRoute, selectedCatRoute, name) // won't show in url
   }
-
+// serves above 3 functions, name is defined on the fly, type is shop/cate/deal
   const toggleFilterButton = (name, type) => {
       var htmlIdActive = "active-" + type
       var element = document.querySelectorAll(`[data-${type}="${name}"]`)
       var node = element.item(0)
       if(node != null) {
         if(node.hasAttribute("id")) {
-          node.removeAttribute("id") // deactivate the clicked element
+          node.removeAttribute("id") // unclick if it's the clicked
         }
         else {
           var activeElement = document.getElementById(htmlIdActive)
@@ -266,6 +284,7 @@ function Main(props) {
                     
                   })}
                 </div>
+                {/* clickOnDeal function */}
                 <div className="filter-deal">
                   <span onClick={() => clickOnDeal("10")} data-deal="10">{'≥ 10%'}</span>
                   <span onClick={() => clickOnDeal("20")} data-deal="20">{'≥ 20%'}</span>

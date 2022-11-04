@@ -33,8 +33,8 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={<Main />} />
-          {/* interaction with left hand side filters  */}
-          {Offers.map((item) => { // Map all routes to the offers
+          {/* display of main page  */}
+          {Offers.map((item) => { // All products in Offer.json
            return <Route path={ "" + item.shop +"/product/" + convertProductToLink(item.product) + ""} element={<SingleProduct item={item} />} />
           })}
 
@@ -51,9 +51,9 @@ function App() {
           {categoryList.map((category, key) => { // if you click on one blue category label, the url will change
               return <Route key={key} path={"alle-winkels/" + category} element={<Main cat={category} />} />
             })}
-          
-          <Route path="alle-winkels" element={<Main />} /> { /* Map all routes for all shops with everything */ }
-          
+
+          {/* when nothing is selected, 'alle-winkels' is the url path */}
+          <Route path="alle-winkels" element={<Main />} />
           <Route path="bewaard" element={<Bookmarks />} />
           <Route path="zoek" element={<SearchProduct />} />
           {/* when you click on 'deel' the url in the pop-up */}
